@@ -1,0 +1,244 @@
+
+create table cliente(
+	id SERIAL, 
+	primer_nombre varchar(40) not null,
+	segundo_nombre varchar(40),
+	primer_apellido varchar(50) not null,
+	segundo_apellido varchar(50),
+	tipo_de_documento varchar(3) not null,
+	documento varchar(80) not null,
+	celular varchar(50) not null,
+	direccion varchar(80) not null,
+	correo_electronico varchar(90) not null,
+	clave varchar(100) not null,
+	check(tipo_de_documento='C.C' or tipo_de_documento='T.E' or tipo_de_documento='C.E'),
+	primary key (documento)	
+);
+
+
+insert into cliente(primer_nombre,segundo_nombre,primer_apellido,segundo_apellido,
+tipo_de_documento,documento,celular,direccion,correo_electronico,clave)
+values('jonathan','','castro','cardona','C.C','73006276','3042130391','cartagena b socorro m14 l13','jhcascardona@gmail.com','345dfg');
+
+insert into cliente(primer_nombre,segundo_nombre,primer_apellido,segundo_apellido,
+tipo_de_documento,documento,celular,direccion,correo_electronico,clave)
+values('sara','sofia','castro','careru','C.C','43006276','5042130391','el cesar b socorro m14 l13','saracardoea@gmail.com','456yuj');
+
+insert into cliente(primer_nombre,segundo_nombre,primer_apellido,segundo_apellido,
+tipo_de_documento,documento,celular,direccion,correo_electronico,clave)
+values('ana','agudelo','perez','careru','C.E','33006276','5042130391','caracas m14 l13','ana23456yuio@gmail.com','ghjnbvcd2');
+
+insert into cliente(primer_nombre,segundo_nombre,primer_apellido,segundo_apellido,
+tipo_de_documento,documento,celular,direccion,correo_electronico, clave)
+values('pablaa','agudelo','pino','tellez','T.E','730055','5842130391','caracas m14 l13','ana2345pablaa@gmail.com', 'qws121');
+
+select *from cliente;
+--drop table cliente;
+
+create table vehiculo(
+	id SERIAL, 
+	placa varchar(20) not null,
+	dueño varchar(80) not null,
+	presuarrevehiculo integer not null,
+	fecha_registro_carro date DEFAULT CURRENT_DATE,
+	check(presuarrevehiculo>=0),
+	primary key(placa),
+	foreign key (dueño) references cliente (documento) on update cascade on delete cascade
+);
+
+
+---insercion vehiculos
+insert into vehiculo(placa, dueño, presuarrevehiculo)values('cdf342','73006276',0);
+insert into vehiculo(placa, dueño, presuarrevehiculo)values('cer742','73006276',23000);
+insert into vehiculo(placa, dueño, presuarrevehiculo)values('cdf334','43006276',45000);
+insert into vehiculo(placa, dueño, presuarrevehiculo)values('pde33','33006276',89000);
+insert into vehiculo(placa, dueño, presuarrevehiculo)values('ode33','730055',76000);
+
+select *from vehiculo;
+--drop table vehiculo;
+
+create table mantenimiento(
+	id serial,
+	id_mantenimiento varchar(50) not null,
+	vehiculo varchar(20) not null,
+	estado varchar(20) not null,
+	fecha_registro_mantenimiento date DEFAULT CURRENT_DATE,
+	check(estado='terminado' or estado='no_terminado'),
+	primary key(id_mantenimiento),
+	foreign key (vehiculo) references vehiculo (placa) on update cascade on delete cascade
+);
+select *from mantenimiento;
+--drop table mantenimiento;
+
+insert into mantenimiento(id_mantenimiento, vehiculo, estado)values('2323ab', 'cdf342', 'no_terminado');
+insert into mantenimiento(id_mantenimiento, vehiculo, estado)values('72323ab', 'cer742', 'no_terminado');
+insert into mantenimiento(id_mantenimiento, vehiculo, estado)values('72323aCC', 'ode33', 'no_terminado');
+
+create table mecanico(
+	primer_nombre varchar(40) not null,
+	segundo_nombre varchar(40),
+	primer_apellido varchar(50) not null,
+	segundo_apellido varchar(50),
+	tipo_de_documento varchar(3) not null,
+	documento varchar(80) not null,
+	celular varchar(50) not null,
+	direccion varchar(80) not null,
+	correo_electronico varchar(90) not null,
+	check(tipo_de_documento='c.c' or tipo_de_documento='t.e' or tipo_de_documento='c.e'),
+	primary key (documento)	
+);
+
+insert into mecanico(primer_nombre,segundo_nombre,primer_apellido,segundo_apellido,
+tipo_de_documento,documento,celular,direccion,correo_electronico)
+values('juan','fg','ro','card','c.c','5544276','3044440391','cartagena b socorro m11 l3','gascardgga@gmail.com');
+
+insert into mecanico(primer_nombre,segundo_nombre,primer_apellido,segundo_apellido,
+tipo_de_documento,documento,celular,direccion,correo_electronico)
+values('maria','carla','do','card','c.e','44276','344440391','cartagena b blezo l3','gtttttta@gmail.com');
+
+insert into mecanico(primer_nombre,segundo_nombre,primer_apellido,segundo_apellido,
+tipo_de_documento,documento,celular,direccion,correo_electronico)
+values('saul','luis','gomez','elhaz','c.e','99944276','3144403391','bogotá b blezo l3','gtttttta@gmail.com');
+
+select *from mecanico;
+--drop table mecanico;
+
+create table servicio(
+	id_servicio varchar(50) not null,
+	nombre_servicio varchar(70) not null,
+	mano_obra_servicio integer not null,
+	check (mano_obra_servicio>=100000 and mano_obra_servicio<=500000),
+	primary key(id_servicio)
+);
+
+insert into servicio(id_servicio,nombre_servicio,mano_obra_servicio)values('servicio1','latonado pequeño',200000);
+insert into servicio(id_servicio,nombre_servicio,mano_obra_servicio)values('servicio2','latonado mediano',250000);
+insert into servicio(id_servicio,nombre_servicio,mano_obra_servicio)values('servicio3','latonado grande',300000);
+insert into servicio(id_servicio,nombre_servicio,mano_obra_servicio)values('servicio4','sacado de golpe',100000);
+insert into servicio(id_servicio,nombre_servicio,mano_obra_servicio)values('servicio5','pintado pequeño',100000);
+insert into servicio(id_servicio,nombre_servicio,mano_obra_servicio)values('servicio6','sacado de mediano',150000);
+insert into servicio(id_servicio,nombre_servicio,mano_obra_servicio)values('servicio7','sacado de grande',200000);
+insert into servicio(id_servicio,nombre_servicio,mano_obra_servicio)values('servicio8','alineacion',200000);
+insert into servicio(id_servicio,nombre_servicio,mano_obra_servicio)values('servicio9','limado',200000);
+insert into servicio(id_servicio,nombre_servicio,mano_obra_servicio)values('servicio10','pintado',300000);
+
+select *from servicio;
+--drop table servicio;
+
+create table servicio_mantenimiento_apoyomecanico(
+	id serial,
+	fecha_ser_man_apom date DEFAULT CURRENT_DATE,
+	servicio varchar(50) not null,
+	mantenimiento varchar(50) not null,
+	mecanico varchar(80) not null,
+	
+	foreign key (servicio) references servicio (id_servicio) on update cascade on delete cascade,
+	foreign key (mantenimiento) references mantenimiento (id_mantenimiento) on update cascade on delete cascade,
+	foreign key (mecanico) references mecanico (documento) on update cascade on delete cascade,
+	
+	primary key(servicio,mantenimiento)
+);
+insert into servicio_mantenimiento_apoyomecanico(servicio,mantenimiento,mecanico)values('servicio1','72323ab','5544276');
+insert into servicio_mantenimiento_apoyomecanico(servicio,mantenimiento,mecanico)values('servicio1','2323ab','5544276');
+insert into servicio_mantenimiento_apoyomecanico(servicio,mantenimiento,mecanico)values('servicio2','2323ab','99944276');
+
+select *from servicio_mantenimiento_apoyomecanico;
+--drop table servicio_mantenimiento_apoyomecanico;
+
+create table producto(
+id_p serial primary key,
+id_producto integer not null,
+id_tiendapertenece varchar(50) not null,
+nombre_producto varchar(70) not null,
+tipo_prodto varchar(20) not null,
+cant_unidades integer not null,
+valor_unidad integer not null,
+check(tipo_prodto='repuesto' or tipo_prodto='otro')
+);
+
+insert into producto(id_producto, id_tiendapertenece, nombre_producto, tipo_prodto, cant_unidades, valor_unidad)values
+(1,'Car_Center1','Caja De Cambio','repuesto',20,200000);
+
+insert into producto(id_producto, id_tiendapertenece, nombre_producto, tipo_prodto, cant_unidades, valor_unidad)values
+(100,'Car_Center2','Bateria','repuesto',200,200000);
+
+insert into producto(id_producto, id_tiendapertenece, nombre_producto, tipo_prodto, cant_unidades, valor_unidad)values
+(100,'Car_Center5','Bateria','repuesto',200,200000);
+
+insert into producto(id_producto, id_tiendapertenece, nombre_producto, tipo_prodto, cant_unidades, valor_unidad)values
+(100,'Car_Center10','Bateria','repuesto',200,200000);
+
+insert into producto(id_producto, id_tiendapertenece, nombre_producto, tipo_prodto, cant_unidades, valor_unidad)values
+(20,'Car_Center10','Llanta','repuesto',60,20000);
+
+insert into producto(id_producto, id_tiendapertenece, nombre_producto, tipo_prodto, cant_unidades, valor_unidad)values
+(20,'Car_Center11','Llanta','repuesto',60,20000);
+
+insert into producto(id_producto, id_tiendapertenece, nombre_producto, tipo_prodto, cant_unidades, valor_unidad)values
+(50,'Car_Center11','pintura en pote','otro',60,30000);
+
+insert into producto(id_producto, id_tiendapertenece, nombre_producto, tipo_prodto, cant_unidades, valor_unidad)values
+(50,'Car_Center14','pintura en pote','otro',60,30000);
+
+insert into producto(id_producto, id_tiendapertenece, nombre_producto, tipo_prodto, cant_unidades, valor_unidad)values
+(40,'Car_Center14','cera','otro',60,10000);
+
+insert into producto(id_producto, id_tiendapertenece, nombre_producto, tipo_prodto, cant_unidades, valor_unidad)values
+(40,'Car_Center6','cera','otro',70,11000);
+
+insert into producto(id_producto, id_tiendapertenece, nombre_producto, tipo_prodto, cant_unidades, valor_unidad)values
+(100,'Car_Center2','Carburador','repuesto',100,200000);
+
+insert into producto(id_producto, id_tiendapertenece, nombre_producto, tipo_prodto, cant_unidades, valor_unidad)values
+(100,'Car_Center2','caja de cambio gigante','repuesto',20,200000);
+
+insert into producto(id_producto, id_tiendapertenece, nombre_producto, tipo_prodto, cant_unidades, valor_unidad)values
+(100,'Car_Center5','Bateria pequeña','repuesto',200,200000);
+
+insert into producto(id_producto, id_tiendapertenece, nombre_producto, tipo_prodto, cant_unidades, valor_unidad)values
+(100,'Car_Center5','Bateria multiple','repuesto',200,200000);
+
+insert into producto(id_producto, id_tiendapertenece, nombre_producto, tipo_prodto, cant_unidades, valor_unidad)values
+(100,'Car_Center10','Sprait doble','otro',200,20000);
+
+insert into producto(id_producto, id_tiendapertenece, nombre_producto, tipo_prodto, cant_unidades, valor_unidad)values
+(100,'Car_Center10','Aceite doble','otro',200,20000);
+
+select *from producto;
+--drop table producto;
+
+create table producto_mantenimiento(
+id serial,	
+id_mantenimiento varchar(50) not null,
+producto integer not null,
+cantidad_utilizar integer not null,
+fecha_compra date DEFAULT CURRENT_DATE,
+check(cantidad_utilizar>=1),
+foreign key(id_mantenimiento) references mantenimiento (id_mantenimiento) on update cascade on delete cascade,	
+foreign key(producto) references producto (id_p) on update cascade on delete cascade,
+primary key(id_mantenimiento,producto)
+);
+select *from producto_mantenimiento;
+--drop table producto_mantenimiento;
+
+insert into producto_mantenimiento(id_mantenimiento,producto,cantidad_utilizar)
+values('2323ab',1,20);
+
+insert into producto_mantenimiento(id_mantenimiento,producto,cantidad_utilizar)
+values('2323ab',2,20);
+
+insert into producto_mantenimiento(id_mantenimiento,producto,cantidad_utilizar)
+values('2323ab',3,20);
+
+
+insert into producto_mantenimiento(id_mantenimiento,producto,cantidad_utilizar)
+values('72323aCC',4,2);
+
+insert into producto_mantenimiento(id_mantenimiento,producto,cantidad_utilizar)
+values('72323aCC',5,2);
+
+
+
+select *from servicio;
+select *from mecanico;
+select *from servicio_mantenimiento_apoyomecanico;
